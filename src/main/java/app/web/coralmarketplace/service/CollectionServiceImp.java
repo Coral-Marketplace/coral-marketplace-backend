@@ -101,8 +101,10 @@ public class CollectionServiceImp implements CollectionService {
         User user = userService.getByPublicAddress(SecurityContextHolder.getContext().getAuthentication().getName());
         collection.setUser(user);
 
-        String logoUrl = awsService.saveFile(logoFolder, collection.getId().toString(), logo, collection.getLogo());
-        collection.setLogo(logoUrl);
+        if (logo != null) {
+            String logoUrl = awsService.saveFile(logoFolder, collection.getId().toString(), logo, collection.getLogo());
+            collection.setLogo(logoUrl);
+        }
 
         if (banner != null) {
             String coverImageUrl = awsService.saveFile(bannerFolder, collection.getId().toString(), banner,
